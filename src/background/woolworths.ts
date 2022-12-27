@@ -1,31 +1,11 @@
 
-
 export interface WoolworthsListItem {
-  name: string;
-  stockcode: string;
+  DisplayName: string,
+  Stockcode: number;
+  QuantityInTrolley: number;
 }
 
-// {
-//   stockcode: 829630,
-//   quantity: 1,
-// }
-
-// This does not appear to be necessary
-async function makeCallInWoolworthsTab<T>(func: () => Promise<T>) {
-  const [tab] = await chrome.tabs.query({ url: 'https://www.woolworths.com.au/*' })
-
-  if (!tab.id) {
-    throw new Error('Cannot find tab');
-  }
-
-  const [execution] = await chrome.scripting.executeScript({
-    target: { tabId: tab.id },
-    func
-  });
-  return execution.result;
-}
-
-export async function getListItems() {
+export async function getListItems(): Promise<WoolworthsListItem[]> {
   const { woolworthsListId: listId } = await chrome.storage.sync.get('woolworthsListId');
 
   const res = await fetch(`https://www.woolworths.com.au/apis/ui/mylists/${listId}/products?` + new URLSearchParams({
@@ -37,11 +17,8 @@ export async function getListItems() {
     UseV2Tags: 'true',
   }));
 
-  const listContent = await res.json();
-  return listContent.Items.map((v: { DisplayName: string, Stockcode: string }) => ({
-    name: v.DisplayName,
-    stockcode: v.Stockcode,
-  }));
+  const listContent = await res.json() as { Items: WoolworthsListItem[] };
+  return listContent.Items;
 }
 
 

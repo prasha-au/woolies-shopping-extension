@@ -12,7 +12,6 @@ let accessTokenCache: Token;
 async function getAccessToken() {
   const options = await chrome.storage.sync.get();
   const optionsHash = `${options.keepClientEmail}||${options.keepUserEmail}||${options.keepClientPrivateKey}`;
-  console.log(options);
 
   if (accessTokenCache && accessTokenCache.optionsHash === optionsHash && (accessTokenCache.expiry - 1000) > Date.now()) {
     return accessTokenCache.accessToken;
