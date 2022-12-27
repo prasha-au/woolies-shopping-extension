@@ -5,7 +5,12 @@ console.log('Woolies shopping extension loaded.');
 
 async function onImport() {
   console.log('===== importing ====');
-  await chrome.runtime.sendMessage({ action: 'importFromKeep' });
+  const response = await chrome.runtime.sendMessage({ action: 'importFromKeep' });
+  if (!response.success) {
+    alert('Unable to import from Keep.');
+  } else {
+    window.location.reload();
+  }
 }
 
 

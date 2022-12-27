@@ -52,22 +52,28 @@ async function populateCart() {
 }
 
 
-chrome.runtime.onMessage.addListener(
-  async (request, sender, sendResponse) => {
-    console.log(sender.tab ?
-                "from a content script:" + sender.tab.url :
-                "from the extension");
 
-    switch (request.action) {
-      case 'importFromKeep': {
-        await populateCart();
-        sendResponse({ success: true });
-      }
-      default:
-        sendResponse({ success: false });
-        break;
+async function messageHandler(request: { action: string; }) {
+  switch (request.action) {
+    case 'importFromKeep': {
+      await populateCart();
+      return null;
     }
+    default:
+      throw Error('Invalid action.');
+  }
+}
 
+
+chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
+    messageHandler(request)
+    .then((res) => {
+      sendResponse({ success: true, result: res })
+    })
+    .catch(e => {
+      sendResponse({ success: false, error: e.message })
+    });
+    return true;
   }
 )
 
