@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Shopping List Options</title>
+<style>
+input[type=text], select, textarea {
+width: 100%;
+padding: 6px 10px;
+margin: 8px 0;
+display: inline-block;
+border: 1px solid #ccc;
+border-radius: 4px;
+box-sizing: border-box;
+}
+fieldset {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+</style>
+</head>
+<body>
+
+
+  <fieldset>
+    <legend>Woolworths</legend>
+    <p>
+      <label for="woolworthsListId">List ID:</label>
+      <input type="text" name="woolworthsListId" id="woolworthsListId">
+    </p>
+  </fieldset>
+
+
+  <fieldset>
+    <legend>Keep</legend>
+    <p>
+      <label for="keepClientEmail">Client Email:</label>
+      <input type="text" name="keepClientEmail" id="keepClientEmail">
+    </p>
+    <p>
+      <label for="keepClientPrivateKey">Client PK:</label>
+      <textarea name="keepClientPrivateKey" id="keepClientPrivateKey" cols="30" rows="10"></textarea>
+    </p>
+    <p>
+      <label for="keepUserEmail">User Email:</label>
+      <input type="text" name="keepUserEmail" id="keepUserEmail">
+    </p>
+    <p>
+      <label for="keepNoteId">Note ID:</label>
+      <input type="text" name="keepNoteId" id="keepNoteId">
+    </p>
+  </fieldset>
+
+  <button id="save">Save</button>
+
+  <script src="options.js"></script>
+</body>
+</html>

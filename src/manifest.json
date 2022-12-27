@@ -1,0 +1,29 @@
+{
+  "name": "Shopping List",
+  "description": "Keep to Woolworths.",
+  "version": "1.0",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.woolworths.com.au/*"],
+      "js": ["sitecontent.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "storage",
+    "tabs",
+    "scripting"
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "host_permissions": [
+    "http://localhost/*",
+    "https://www.woolworths.com.au/*"
+  ]
+}

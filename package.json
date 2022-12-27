@@ -1,0 +1,31 @@
+{
+  "name": "shoppinglist",
+  "version": "1.0.0",
+  "author": "Prashanth Santhirakumaran",
+  "license": "MIT",
+  "description": "Chrome extension for Google Keep to Woolworths shopping lists.",
+  "private": true,
+  "scripts": {
+    "node": "ts-node",
+    "test": "ts-node src/index.ts",
+    "quicktest": "ts-node --transpile-only src/index.ts",
+    "build": "webpack"
+  },
+  "dependencies": {
+    "axios": "^1.2.1",
+    "fuse.js": "^6.6.2",
+    "google-auth-library": "^8.7.0",
+    "googleapis": "^109.0.1",
+    "jose": "^4.11.1"
+  },
+  "devDependencies": {
+    "@types/chrome": "0.0.206",
+    "copy-webpack-plugin": "^11.0.0",
+    "ts-loader": "^9.4.2",
+    "ts-node": "^10.9.1",
+    "tsc": "^2.0.4",
+    "typescript": "^4.9.4",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
+  }
+}
