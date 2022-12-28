@@ -13,25 +13,25 @@ async function getSearchIndex() {
   });
 }
 
-
 async function populateCart() {
   const keepList = await getKeepList();
-
   const searchIndex = await getSearchIndex();
 
   const itemsToAdd = [];
   for (const search of keepList) {
     const result = searchIndex.search(search);
-
     if (!result.length) {
       console.log(`Unable to find an item for ${search}`);
     }
-
     const item = result[0].item;
-    itemsToAdd.push({ stockcode: item.Stockcode, quantity: item.QuantityInTrolley || 1 });
+    console.log(`Adding ${item.DisplayName} for ${search}`);
+    if (item.QuantityInTrolley === 0) {
+      itemsToAdd.push({ stockcode: item.Stockcode, quantity: 1 });
+    }
   }
-
-  await addToCart(itemsToAdd);
+  if (itemsToAdd.length > 0) {
+    await addToCart(itemsToAdd);
+  }
 }
 
 async function messageHandler(request: { action: string; }) {
