@@ -1,6 +1,5 @@
 import * as jose from 'jose';
 
-
 interface Token {
   optionsHash: string;
   accessToken: string;
@@ -58,7 +57,7 @@ async function getAccessToken() {
 
 export async function getKeepList() {
   const accessToken = await getAccessToken();
-  const { keepNoteId } = await chrome.storage.sync.get('keepNoteId');
+  const { keepNoteId, keepTransformations } = await chrome.storage.sync.get(['keepNoteId', 'keepTransformations']);
 
   const res = await fetch(`https://keep.googleapis.com/v1/notes/${keepNoteId}`, {
     headers: {
@@ -78,8 +77,11 @@ export async function getKeepList() {
       }
     }
   };
-  const listItems = resData.body.list.listItems.filter(v => v.checked === false).map(v => v.text.text.trim());
 
-  return listItems;
+  return resData.body.list.listItems
+    .filter(v => v.checked === false)
+    .map(v => v.text.text.trim())
+    .map(v => v.replace(/^Test /gi, ''))
+    .map(v => keepTransformations[v.toLowerCase()] ?? v);
 }
 

@@ -6,6 +6,11 @@
   "background": {
     "service_worker": "background.js"
   },
+  "icons": {
+    "32": "assets/icon_32.png",
+    "64": "assets/icon_64.png",
+    "192": "assets/icon_192.png"
+  },
   "content_scripts": [
     {
       "matches": ["https://www.woolworths.com.au/*"],

@@ -29,6 +29,7 @@ module.exports = {
       patterns: [
         './src/manifest.json',
         { from: './src/options/index.html', to: 'options.html' },
+        { from: './src/assets/*', to: 'assets/[name][ext]' },
       ],
     }),
   ]
