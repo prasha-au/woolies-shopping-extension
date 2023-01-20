@@ -1,0 +1,95 @@
+body {
+  font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+  font-size: 100%;
+  width: 400px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+#status {
+  white-space: pre;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 500px;
+}
+.itemlist .item {
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ccc;
+}
+
+.itemlist .item:last-child {
+  border-bottom: none;
+}
+
+
+.itemlist .item div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+}
+
+.itemlist .item .searchText {
+  width: 200px;
+  text-overflow: ellipsis;
+}
+
+.itemlist .item img {
+  width: 50px;
+  height: 50px;
+}
+
+.itemlist .item .image {
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+
+.itemlist .item .image.canadd {
+  cursor: pointer;
+}
+
+.itemlist .item .image .status {
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(33, 33, 33, 0.5);
+  color: #fff;
+  font-size: 2em;
+  text-align: center;
+}
+
+.itemlist .item .image.incart .status {
+  display: block;
+  background:rgba(72, 170, 63, 0.5)
+}
+
+
+.itemlist .item .image.canadd:hover .status {
+  display: block;
+}
+
+
+
+
+button {
+  display: inline-block;
+  vertical-align: middle;
+  border: 2px solid #178841;
+  background: #178841;
+  color: #fff;
+  border-radius: 28px;
+  text-align: center;
+  padding: 5px 15px;
+  cursor: pointer;
+  user-select: none;
+}
+
+button:hover, button:focus {
+  background-color: #126c34;
+  border-color: #126c34;
+}
