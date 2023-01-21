@@ -80,7 +80,8 @@ export async function getKeepList() {
 
   return resData.body.list.listItems
     .filter(v => v.checked === false)
-    .map(v => v.text.text.trim())
+    .map(v => v.text?.text?.trim())
+    .filter(v => !!v)
     .map(v => v.replace(/^Test /gi, ''))
     .map(v => keepTransformations[v.toLowerCase()] ?? v);
 }
