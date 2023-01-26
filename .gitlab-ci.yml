@@ -1,0 +1,27 @@
+stages:
+  - release
+
+cache:
+  key: npm_cache
+  paths:
+    - .npm
+
+release:
+  stage: release
+  image: node:16-slim
+  rules:
+    - if: $CI_COMMIT_TAG
+  before_script:
+    - npm set cache .npm
+    - npm ci --prefer-offline
+  script:
+    - npm run build
+    - mv dist woolies-shopping-extension
+  release:
+    tag_name: '$CI_COMMIT_TAG'
+    name: 'Release $CI_COMMIT_TAG'
+    description: 'Auto-release $CI_COMMIT_TAG'
+  artifacts:
+    name: woolies-shopping-extension_$CI_COMMIT_TAG
+    paths:
+      - woolies-shopping-extension
