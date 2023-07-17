@@ -83,6 +83,9 @@ export async function getKeepList() {
     .map(v => v.text?.text?.trim())
     .filter(v => !!v)
     .map(v => v.replace(/^Test /gi, ''))
-    .map(v => keepTransformations[v.toLowerCase()] ?? v);
+    .map(v => ({
+      searchTerm: keepTransformations[v.toLowerCase()] ?? v,
+      originalTerm: v,
+    }));
 }
 

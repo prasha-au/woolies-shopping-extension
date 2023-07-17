@@ -17,13 +17,13 @@ async function getSearchIndex() {
 async function getMatchingItems() {
   const keepList = await getKeepList();
   const searchIndex = await getSearchIndex();
-  return keepList.map(search => {
-    const result = searchIndex.search(search);
+  return keepList.map(listItem => {
+    const result = searchIndex.search(listItem.searchTerm);
     if (!result.length) {
-      return { search, item: null, inCart: false };
+      return { search: listItem.originalTerm, item: null, inCart: false };
     }
     const item = result[0].item;
-    return { search, item, inCart: item.QuantityInTrolley > 0 };
+    return { search: listItem.originalTerm, item, inCart: item.QuantityInTrolley > 0 };
   });
 }
 

@@ -2,7 +2,7 @@ body {
   font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
   font-size: 100%;
   width: 400px;
-  max-height: 500px;
+  max-height: 3500px;
   overflow-y: auto;
 }
 #status {
@@ -36,8 +36,8 @@ body {
 }
 
 .itemlist .item img {
-  width: 50px;
-  height: 50px;
+  width: 35px;
+  height: 35px;
 }
 
 .itemlist .item .image {
@@ -59,7 +59,8 @@ body {
   right: 0;
   background: rgba(33, 33, 33, 0.5);
   color: #fff;
-  font-size: 2em;
+  font-size: 30px;
+  line-height: 35px;
   text-align: center;
 }
 

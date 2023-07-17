@@ -26,11 +26,12 @@ async function restoreOptions() {
   }
 
   const data = await chrome.storage.sync.get();
+  console.log(data);
   for (const key of basicFields) {
     setFieldIfExists(key, data[key] ?? '');
   }
 
-  setFieldIfExists('keepTransformations', Object.entries(data.remap ?? {}).map(([k, v]) => `${k}|${v}`).join('\n'));
+  setFieldIfExists('keepTransformations', Object.entries(data.keepTransformations ?? {}).map(([k, v]) => `${k}|${v}`).join('\n'));
 }
 
 document.addEventListener('DOMContentLoaded', restoreOptions);
