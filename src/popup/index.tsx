@@ -58,12 +58,13 @@ function App() {
     {matchingItems === undefined ? <div>Loading...</div> : <>
       {hasError ? <div>Error loading.</div> : <>
         <div className="itemlist">
+          {matchingItems.length === 0 ? <div className="item">No items found.</div> : null}
           {matchingItems.map(item => {
             return <div className="item">
               <div className="searchText">{item.search}</div>
               {item.item.QuantityInTrolley > 0 ? <div className="image incart">
                 <img src={item.item.SmallImageFile} alt="" />
-                <div className="status">Y</div>
+                <div className="status">&check;</div>
               </div> : <div className="image canadd" onClick={async () => {
                 await addToCart(item.item.Stockcode, item.item.QuantityInTrolley || 1);
                 fetchMatching();

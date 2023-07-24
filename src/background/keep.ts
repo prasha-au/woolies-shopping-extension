@@ -77,8 +77,7 @@ export async function getKeepList() {
       }
     }
   };
-
-  return resData.body.list.listItems
+  return (resData.body.list.listItems ?? [])
     .filter(v => v.checked === false)
     .map(v => v.text?.text?.trim())
     .filter(v => !!v)

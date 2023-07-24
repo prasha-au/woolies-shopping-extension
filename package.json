@@ -5,7 +5,8 @@
   "description": "Chrome extension for Google Keep to Woolworths shopping lists.",
   "private": true,
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "build:watch": "webpack --watch"
   },
   "dependencies": {
     "fuse.js": "^6.6.2",
