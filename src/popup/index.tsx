@@ -1,5 +1,4 @@
-export {};
-  import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 
 interface WoolworthsListItem {
@@ -23,14 +22,20 @@ async function runAction<T>(action: string, parameters?: Record<string, unknown>
 }
 
 
+async function getWooliesTabId(): Promise<number> {
+  const tab = await chrome.tabs.query({ active: true });
+  return tab[0].id ?? 0;
+}
+
+
 async function addToCart(stockCode: number, quantity?: number) {
   await runAction('addToCart', { stockCode, quantity });
-  await chrome.tabs.reload();
+  await chrome.tabs.reload(await getWooliesTabId());
 }
 
 
 async function searchForItem(search: string) {
-  await chrome.tabs.update(undefined as unknown as number, { url: `https://www.woolworths.com.au/shop/search/products?searchTerm=${search}` });
+  await chrome.tabs.update(await getWooliesTabId(), { url: `https://www.woolworths.com.au/shop/search/products?searchTerm=${search}` });
 }
 
 
@@ -50,11 +55,19 @@ function App() {
     });
   }, []);
 
+
   useEffect(() => {
     fetchMatching();
   }, []);
 
+  const isInExtensionPopup = chrome.extension.getViews({ type: "popup" })[0] === window;
+
   return <>
+    {isInExtensionPopup && <>
+    <button onClick={() => {
+      window.open(window.location.href, '_blank', 'popup,width=425,height=500');
+      window.close();
+    }}>Open In Window</button><br /></>}
     {matchingItems === undefined ? <div>Loading...</div> : <>
       {hasError ? <div>Error loading.</div> : <>
         <div className="itemlist">
@@ -64,7 +77,7 @@ function App() {
               <div className="searchText">{item.search}</div>
               {item.item.QuantityInTrolley > 0 ? <div className="image incart">
                 <img src={item.item.SmallImageFile} alt="" />
-                <div className="status">&check;</div>
+                <div className="status">&#10003;</div>
               </div> : <div className="image canadd" onClick={async () => {
                 await addToCart(item.item.Stockcode, item.item.QuantityInTrolley || 1);
                 fetchMatching();
