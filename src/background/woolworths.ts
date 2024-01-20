@@ -3,6 +3,17 @@ export interface WoolworthsListItem {
   DisplayName: string,
   Stockcode: number;
   QuantityInTrolley: number;
+  // SmallImageFile: string;
+  ImageFile: string;
+}
+
+function pickValues(v: WoolworthsListItem & { SmallImageFile?: string }): WoolworthsListItem {
+  return {
+    DisplayName: v.DisplayName,
+    Stockcode: v.Stockcode,
+    QuantityInTrolley: v.QuantityInTrolley,
+    ImageFile: v.ImageFile ?? v.SmallImageFile,
+  };
 }
 
 export async function getListItems(): Promise<WoolworthsListItem[]> {
@@ -22,7 +33,7 @@ export async function getListItems(): Promise<WoolworthsListItem[]> {
     }));
 
     const listContent = await res.json() as { Items: WoolworthsListItem[]; TotalRecordCount: number; };
-    items.push(...listContent.Items);
+    items.push(...listContent.Items.map(pickValues));
     totalRecordCount = listContent.TotalRecordCount;
     pageNumber++;
   } while (items.length < totalRecordCount)
@@ -42,3 +53,9 @@ export async function addToCart(items: { stockcode: number, quantity: number }[]
   return await res.json();
 }
 
+
+export async function getCartList(): Promise<WoolworthsListItem[]> {
+  const res = await fetch('https://www.woolworths.com.au/apis/ui/Checkout');
+  const data = await res.json();
+  return data.Model.Order.Products.map(pickValues);
+}

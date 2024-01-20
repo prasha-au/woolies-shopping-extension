@@ -1,55 +1,21 @@
 import { getKeepList } from './keep';
-import Fuse from 'fuse.js';
-import { WoolworthsListItem, addToCart, getListItems } from './woolworths';
+import { addToCart, getCartList, getListItems } from './woolworths';
 
 console.log('Shopping list background script started');
 
-async function getSearchIndex() {
-  return new Fuse(await getListItems(), {
-    keys: ['DisplayName'] as (keyof WoolworthsListItem)[],
-    ignoreLocation: true,
-    shouldSort: true,
-    includeScore: true,
-  });
-}
-
-
-async function getMatchingItems() {
-  const keepList = await getKeepList();
-  const searchIndex = await getSearchIndex();
-  return keepList.map(listItem => {
-    const result = searchIndex.search(listItem.searchTerm);
-    if (!result.length) {
-      return { search: listItem.originalTerm, item: null, inCart: false };
-    }
-    const item = result[0].item;
-    return { search: listItem.originalTerm, item, inCart: item.QuantityInTrolley > 0 };
-  });
-}
-
-async function populateCart() {
-  const matchingItems = await getMatchingItems();
-  const itemsToAdd = matchingItems
-  .filter(v => !v.inCart && !!v.item)
-  .map(v => ({ stockcode: v.item!.Stockcode, quantity: 1 }));
-  if (itemsToAdd.length > 0) {
-    await addToCart(itemsToAdd);
-  }
-}
 
 async function messageHandler(request: { action: string; parameters?: Record<string, unknown>; }) {
   switch (request.action) {
-    case 'importFromKeep': {
-      await populateCart();
-      return null;
-    }
     case 'addToCart': {
       await addToCart([{ stockcode: request.parameters?.stockCode as number, quantity: request.parameters?.quantity as number ?? 1 }]);
       return null;
     }
-    case 'getMatchingItems': {
-      return await getMatchingItems();
-    }
+    case 'getKeepList':
+      return await getKeepList();
+    case 'getWooliesList':
+      return await getListItems();
+    case 'getCartList':
+      return await getCartList();
     default:
       throw Error('Invalid action.');
   }
@@ -66,3 +32,7 @@ chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
     return true;
   }
 )
+
+chrome.sidePanel
+  .setPanelBehavior({ openPanelOnActionClick: true })
+  .catch((e: unknown) => console.error(e));

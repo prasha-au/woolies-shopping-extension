@@ -7,7 +7,10 @@
     "service_worker": "background.js"
   },
   "action": {
-    "default_popup": "popup.html"
+    "default_title": "Click to show addon"
+  },
+  "side_panel": {
+    "default_path": "popup.html"
   },
   "icons": {
     "32": "assets/icon_32.png",
@@ -17,7 +20,8 @@
   "permissions": [
     "storage",
     "tabs",
-    "scripting"
+    "scripting",
+    "sidePanel"
   ],
   "options_ui": {
     "page": "options.html",

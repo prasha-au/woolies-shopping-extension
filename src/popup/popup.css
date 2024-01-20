@@ -1,7 +1,6 @@
 body {
   font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
   font-size: 100%;
-  width: 400px;
   max-height: 3500px;
   overflow-y: auto;
 }
@@ -27,15 +26,16 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-
 }
 
 .itemlist .item .searchText {
-  width: 200px;
+  width: 100%;
   text-overflow: ellipsis;
+  cursor: pointer;
 }
 
 .itemlist .item img {
+  display: block;
   width: 35px;
   height: 35px;
 }
@@ -44,6 +44,8 @@ body {
   display: block;
   position: relative;
   overflow: hidden;
+  width: 35px;
+  flex-shrink: 0;
 }
 
 .itemlist .item .image.canadd {
@@ -66,7 +68,7 @@ body {
 
 .itemlist .item .image.incart .status {
   display: block;
-  background:rgba(72, 170, 63, 0.5)
+  background:rgba(72, 170, 63, 0.4);
 }
 
 
