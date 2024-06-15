@@ -1,4 +1,5 @@
 import * as jose from 'jose';
+import type { KeepListItem } from '../interfaces';
 
 interface Token {
   optionsHash: string;
@@ -55,7 +56,7 @@ async function getAccessToken() {
 }
 
 
-export async function getKeepList() {
+export async function getKeepList(): Promise<KeepListItem[]> {
   const accessToken = await getAccessToken();
   const { keepNoteId, keepTransformations } = await chrome.storage.sync.get(['keepNoteId', 'keepTransformations']);
 

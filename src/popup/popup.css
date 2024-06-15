@@ -1,8 +1,8 @@
 body {
   font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
   font-size: 100%;
-  max-height: 3500px;
-  overflow-y: auto;
+  overflow-y: hidden;
+  margin: 0;
 }
 #status {
   white-space: pre;
@@ -76,23 +76,42 @@ body {
   display: block;
 }
 
-
-
-
-button {
-  display: inline-block;
-  vertical-align: middle;
-  border: 2px solid #178841;
-  background: #178841;
-  color: #fff;
-  border-radius: 28px;
-  text-align: center;
-  padding: 5px 15px;
+.itemlist .item .productName {
   cursor: pointer;
-  user-select: none;
+  width: 60%;
+  text-wrap: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-button:hover, button:focus {
-  background-color: #126c34;
-  border-color: #126c34;
+
+
+.tabview {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.tabview .tab-headers {
+  display: flex;
+  flex-direction: row;
+}
+
+.tabview .tab-headers div {
+  padding: 10px;
+  border-right: 1px solid #aaa;
+  cursor: pointer;
+  flex-grow: 1;
+  background: #ddd;
+  color: #666;
+  box-shadow: inset 0 5px 8px 0px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.tabview .tab-headers div.active {
+  background: #fff;
+  color: #000;
+  box-shadow: none;
 }
