@@ -5,8 +5,8 @@ interface WoolworthsRawItem {
   Brand: string;
   DisplayName: string;
   ImageFile?: string;
-  InstorePrice: number;
-  Price: number;
+  InstorePrice?: number;
+  Price?: number;
   QuantityInTrolley: number;
   SmallImageFile?: string;
   Stockcode: number;
@@ -21,7 +21,7 @@ function pickValues(v: WoolworthsRawItem): WoolworthsItem {
     stockCode: v.Stockcode,
     quantityInTrolley: v.QuantityInTrolley,
     imageFile: v.ImageFile ?? v.SmallImageFile ?? '',
-    price: v.Price,
+    price: v.Price ?? v.InstorePrice ?? 0,
     wasPrice: v.WasPrice,
   };
 }
