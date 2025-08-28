@@ -32,14 +32,25 @@ async function getAllListItems(listId: string, options: { isSpecial: boolean }):
   let pageNumber = 1;
   let totalRecordCount = 0;
   do {
-    const res = await fetch(`https://www.woolworths.com.au/apis/ui/mylists/${listId}/products?` + new URLSearchParams({
-      PageNumber: pageNumber.toString(),
-      SortType: 'Aisle',
-      SortType2: '',
-      isSpecial: options.isSpecial ? 'true' : 'false',
-      PageSize: '50',
-      UseV2Tags: 'true',
-    }));
+
+    const res = await fetch('https://www.woolworths.com.au/api/v3/ui/savedlists/products', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        listId,
+        pagingParams: {
+          sortType: 'Aisle',
+          sortType2: '',
+          pageNumber: pageNumber.toString(),
+          pageSize: '200',
+          isSpecial: options.isSpecial ? 'true' : 'false',
+        },
+        includedCategoryNodeIds: ['1-E5BEE36E','1_DEB537E','1_D5A2236','1_6E4F4E4','1_39FD49C','1_717445A','1_ACA2FC2','1_5AF3A0A','1_9851658','1_894D0A8','1_F89E4BB','1_717A94B','1_61D6FEB','1_8E4DA6F','1_DEA3ED5','1_2432B58'],
+        version: 'v2'
+      })
+    });
 
     const listContent = await res.json() as { Items: WoolworthsRawItem[]; TotalRecordCount: number; };
     items.push(...listContent.Items.map(v => pickValues(v)));

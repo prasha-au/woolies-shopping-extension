@@ -15,8 +15,8 @@ async function runAction<R extends keyof MessageInterfaces>(action: R, parameter
 
 
 async function getWooliesTabId(): Promise<number> {
-  const tab = await chrome.tabs.query({ active: true });
-  return tab[0].id ?? 0;
+  const tabs = await chrome.tabs.query({ active: true });
+  return tabs.find(tab => tab.url?.includes('woolworths.com.au'))?.id ?? tabs[0]?.id ?? 0;
 }
 
 
